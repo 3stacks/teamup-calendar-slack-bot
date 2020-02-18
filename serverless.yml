@@ -1,31 +1,33 @@
 service:
-  name: teamup-calendar-slack-bot
+    name: teamup-calendar-slack-bot
 
 custom:
-  webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules: true
+    webpack:
+        webpackConfig: ./webpack.config.js
+        includeModules: true
 
 # Add the serverless-webpack plugin
 plugins:
-  - serverless-webpack
+    - serverless-webpack
 
 provider:
-  name: aws
-  runtime: nodejs12.x
-  apiGateway:
-    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
-  environment:
-    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    TEAMUP_TOKEN: ${file(./.env.yml):TEAMUP_TOKEN}
-    CALENDAR_ID: ${file(./.env.yml):CALENDAR_ID}
-    SLACK_TOKEN: ${file(./.env.yml):SLACK_TOKEN}
-    CHANNEL_NAME: ${file(./.env.yml):CHANNEL_NAME}
+    name: aws
+    runtime: nodejs12.x
+    apiGateway:
+        minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+    environment:
+        AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+        TEAMUP_TOKEN: ${file(./.env.yml):TEAMUP_TOKEN}
+        CALENDAR_ID: ${file(./.env.yml):CALENDAR_ID}
+        SLACK_TOKEN: ${file(./.env.yml):SLACK_TOKEN}
+        CHANNEL_NAME: ${file(./.env.yml):CHANNEL_NAME}
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          method: get
-          path: hello
+    hello:
+        handler: handler.hello
+        events:
+            - http:
+                  method: get
+                  path: hello
+            - schedule:
+                  rate: cron(0 22 ? * MON-FRI *)
