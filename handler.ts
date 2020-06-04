@@ -52,7 +52,7 @@ interface IEventList {
     [key: string]: IEvent[];
 }
 
-export const hello: APIGatewayProxyHandler = async (_, _context) => {
+export const sendEvents: APIGatewayProxyHandler = async (_, _context) => {
     const response: AxiosResponse<IResponseData> = await axios.get(
         `https://api.teamup.com/${process.env.CALENDAR_ID}/events`,
         {

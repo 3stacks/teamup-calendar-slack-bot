@@ -19,12 +19,11 @@ provider:
         AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
         TEAMUP_TOKEN: ${file(./.env.yml):TEAMUP_TOKEN}
         CALENDAR_ID: ${file(./.env.yml):CALENDAR_ID}
-        SLACK_TOKEN: ${file(./.env.yml):SLACK_TOKEN}
-        CHANNEL_NAME: ${file(./.env.yml):CHANNEL_NAME}
+        SLACK_WEBHOOK_URL: ${file(./.env.yml):SLACK_WEBHOOK_URL}
 
 functions:
-    hello:
-        handler: handler.hello
+    send-events:
+        handler: handler.sendEvents
         events:
             - http:
                   method: get

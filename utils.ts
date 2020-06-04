@@ -2,20 +2,12 @@ import axios from 'axios';
 
 export async function sendMessage(text: string[]): Promise<any> {
     const response = await axios.post(
-        `https://slack.com/api/chat.postMessage`,
+        process.env.SLACK_WEBHOOK_URL,
         {
-            channel: process.env.CHANNEL_NAME,
-            blocks: text.map(t => ({
-                type: 'section',
-                text: {
-                    type: 'mrkdwn',
-                    text: t,
-                },
-            })),
+            body: text.join('\n')
         },
         {
             headers: {
-                Authorization: `Bearer ${process.env.SLACK_TOKEN}`,
                 'Content-Type': 'application/json',
             },
         }
