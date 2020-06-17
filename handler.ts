@@ -62,6 +62,16 @@ export const sendEvents: APIGatewayProxyHandler = async (_, _context) => {
         }
     );
 
+    const preamble = [
+        'RISE AND GRIND FIREBIRDS 🔥🕊\n',
+        `The date is *${format(
+            new Date(),
+            "EEEE', the' do 'of' LLL"
+        )}*\n`,
+        'Wash your face, brush your teeth, get some fresh air 💅\n\n',
+        '*Firebird calendar events*\n',
+    ]
+
     const events = response.data.events;
 
     if (!events.length) {
@@ -69,6 +79,7 @@ export const sendEvents: APIGatewayProxyHandler = async (_, _context) => {
 
         try {
             const response = await sendMessage([
+                ...preamble,
                 'No events today 😴'
             ]);
 
@@ -144,12 +155,7 @@ export const sendEvents: APIGatewayProxyHandler = async (_, _context) => {
 
                 return [...acc, ...eventLines, '\n'];
             },
-            [
-                `*Events for today (${format(
-                    new Date(events[0].start_dt),
-                    "EEEE', the' do 'of' LLL"
-                )})*\n`,
-            ]
+            []
         );
     });
 
@@ -164,7 +170,10 @@ export const sendEvents: APIGatewayProxyHandler = async (_, _context) => {
     console.info(`text generated: \n${text}`);
 
     try {
-        const response = await sendMessage(text);
+        const response = await sendMessage([
+            ...preamble,
+            ...text
+        ]);
 
         return {
             statusCode: 200,
