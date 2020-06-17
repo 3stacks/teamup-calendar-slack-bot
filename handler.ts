@@ -67,10 +67,21 @@ export const sendEvents: APIGatewayProxyHandler = async (_, _context) => {
     if (!events.length) {
         console.info('no events today');
 
-        return {
-            statusCode: 200,
-            body: 'Success',
-        };
+        try {
+            const response = await sendMessage([
+                'No events today 😴'
+            ]);
+
+            return {
+                statusCode: 200,
+                body: JSON.stringify(response.data),
+            };
+        } catch (e) {
+            return {
+                statusCode: 500,
+                body: 'Failed to send message to slack channel',
+            };
+        }
     }
 
     console.info('events found:', JSON.stringify(events, null, '\t'));

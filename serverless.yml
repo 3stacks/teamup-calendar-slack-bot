@@ -13,6 +13,7 @@ plugins:
 provider:
     name: aws
     runtime: nodejs12.x
+    region: ap-southeast-2
     apiGateway:
         minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
     environment:
@@ -22,11 +23,11 @@ provider:
         SLACK_WEBHOOK_URL: ${file(./.env.yml):SLACK_WEBHOOK_URL}
 
 functions:
-    send-events:
+    sendEvents:
         handler: handler.sendEvents
         events:
             - http:
                   method: get
-                  path: hello
+                  path: send-events
             - schedule:
-                  rate: cron(0 22 ? * MON-FRI *)
+                  rate: cron(0 23 ? * MON-FRI *)
