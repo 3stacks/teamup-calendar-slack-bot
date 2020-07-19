@@ -10,7 +10,7 @@
         "axios": "^0.19.2",
         "date-fns": "^2.9.0",
         "dotenv": "^8.2.0",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "source-map-support": "^0.5.10"
     },
     "devDependencies": {
